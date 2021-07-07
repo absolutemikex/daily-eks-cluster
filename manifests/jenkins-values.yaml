@@ -1,0 +1,36 @@
+---
+jenkins:
+  volumes:
+    - name: backup # PVC volume where backups will be stored
+      persistentVolumeClaim:
+        claimName: jenkins-backup-claim
+  image: jenkins/jenkins:2.277.3-lts-alpine
+  basePlugins:
+    - name: kubernetes
+      version: "1.29.4"
+    - name: workflow-job
+      version: "2.40"
+    - name: workflow-aggregator
+      version: "2.6"
+    - name: git
+      version: "4.7.1"
+    - name: git-client
+      version: "3.7.1"
+    - name: job-dsl
+      version: "1.77"
+    - name: configuration-as-code
+      version: "1.48"
+    - name: kubernetes-credentials-provider
+      version: "0.18-1"
+    - name: blueocean
+      version: "1.24.6"
+    - name: blueocean-github-pipeline
+      version: "1.24.6"
+    - name: blueocean-bitbucket-pipeline
+      version: "1.24.6"
+    - name: aws-secrets-manager-credentials-provider
+      version: "0.5.3"
+    - name: oic-auth
+      version: "1.8"
+backup:
+  image: virtuslab/jenkins-operator-backup-pvc:v0.1.1

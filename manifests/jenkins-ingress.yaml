@@ -1,0 +1,18 @@
+---
+apiVersion: networking.k8s.io/v1beta1 # Use extensions/v1beta1 for Kubernetes 1.14 and older 
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/backend-protocol: HTTP
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    external-dns.alpha.kubernetes.io/hostname: jenkins.firethorne.dev
+    alb.ingress.kubernetes.io/certificate-arn:  arn:aws:acm:us-east-1:636027756810:certificate/b94e983c-f96d-472d-b1c9-ba54ab9cadcc
+  name: jenkins-ingress
+  namespace: jenkins
+spec:
+  backend:
+    serviceName: jenkins-operator-http-jenkins
+    servicePort: 8080
